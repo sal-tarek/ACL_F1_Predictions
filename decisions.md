@@ -1,6 +1,6 @@
 # Decisions log: pre-cleaning profile of our 11 tables (Sasa and Dany)
 
-Source: `sasa-dany-ms1-pre-cleaning.ipynb`, steps P0 to D3. Every line names the step that proved it, so the evidence is one search away.
+Source: `sasa-dany-ms1-pre-cleaning.ipynb`, steps P0 to D3 (our working log). The cleaned-up version for the final notebook is `final-audit/ms1-pre-cleaning-audit.ipynb`; its Part 5 holds the same decisions with the final numbers. One correction found while rebuilding it: `results` repeats 85 driver-races (shared drives, 1950 to 1964 and 1978), so counts of race starts use one row per driver per race (26,668), and the step references below (P0 to D3) refer to the working log. Every line names the step that proved it, so the evidence is one search away.
 Our 11 tables: `seasons`, `circuits`, `drivers`, `constructors`, `status`, `sprint_results`, `driver_standings`, `lap_times`, `pit_stops`, `constructor_standings`, `constructor_results`.
 
 How to read it:
@@ -22,7 +22,7 @@ The raw CSV files were never changed: D3 compares the fingerprint of every raw t
 - **`raceId` is not in date order** (61 ids are earlier than the id before them). Order and lag by season + `round` (or the date), never by `raceId` (B4). Inside a season `round` is in date order (B4).
 
 ### Time and leakage (what may be used before the race)
-- **Standings (drivers and teams): use only the row from the previous round of the same season.** The row under the same `raceId` already contains that race and that weekend's sprint points (B3, B4, B5). Evidence: with the same-race standings the rank correlation with the finishing order is 0.56 instead of 0.46, and the winner leads the table 48.4% of the time after the race against 32.8% before it (B4).
+- **Standings (drivers and teams): use only the row from the previous round of the same season.** The row under the same `raceId` already contains that race and that weekend's sprint points (B3, B4, B5). Evidence: with the same-race standings the rank correlation with the finishing order is 0.57 instead of 0.46, and the winner leads the table 48.4% of the time after the race against 32.8% before it (B4).
 - **Round 1** of each season has no earlier standings (75 races, 6.5% of starts): use a documented start value plus a flag (B3, B4, B5).
 - **No standings row yet = 0 points and 0 wins, but the position stays unknown, never 0** (B3, B4). For teams the same holds, except the Indianapolis 500 chassis of 1958 to 1960, which never get a row and stay out of team features (B5).
 - **`statusId` is never a feature** (it is only known after the race); use it only for question 3 and for past-race DNF rates (A9).
@@ -108,5 +108,5 @@ The raw CSV files were never changed: D3 compares the fingerprint of every raw t
 
 - **Coverage drift (D2 chart):** driver standings cover all 1,125 races, team tables 94%, lap times 48% (from 1996), pit stops 25% (from 2011), sprint 1.6% (from 2021). The brief's two periods are fully covered except the sprint (and the one-lap 2021 Belgian GP for pit stops).
 - **Era sensitivity:** points systems (8 or 9 to 25 for a win, 26 with the fastest-lap point in 2019 to 2024, 50 once in 2014), the age of the grid (median 39 in 1950 to 27.9 in 2024), and the mechanical-retirement rate (9.2% to 5.6%) all change with the era (A6, A9, B4).
-- **Leakage evidence:** the same-race standings look better (0.56 against 0.46 rank correlation), which is why only the previous round is used (B4). Sprint, qualifying and grid are known before the race; status, results, laps, pit stops and the standings of the same race are not.
+- **Leakage evidence:** the same-race standings look better (0.57 against 0.46 rank correlation), which is why only the previous round is used (B4). Sprint, qualifying and grid are known before the race; status, results, laps, pit stops and the standings of the same race are not.
 - **Immutability:** the raw tables were loaded as text, only exploring copies were changed, and the D3 fingerprint check passes (13 tables, 0 changed).
