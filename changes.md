@@ -115,3 +115,19 @@ New subsections at the end of section 10, plus small edits to keep the older tex
 | 9 | **10.9** evidence print and reading | The final model's accuracy is printed next to the accuracy of answering "no podium" for everyone (validation 91.5% against 84.9%, test 89.5% against 84.9%). | It shows with a number why accuracy is not used as a metric. |
 
 **Not changed:** sections 0–9 and the logistic regression and gradient boosting results. The whole notebook was run top to bottom (609 cells, no errors, no warnings). In sections 0–9 only the order of tied rows in a few tables and line breaks in some printed text differ from before; no number changed.
+
+---
+
+## Section 11: Explainability, new (14 Oct 2026)
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | New **11.1** *Permutation importance* | Each feature is shuffled 20 times on the test part and the drop in PR-AUC of the final model is measured (table and chart). | The brief asks for permutation importance as a global explanation. |
+| 2 | New **11.2** *SHAP* | SHAP contributions for every test row, with a check that they add up to the model's score; a bar chart, a beeswarm chart and a chart of the grid slot's contribution. | The brief asks for SHAP as a global explanation. The grid chart shows the curved effect that logistic regression cannot learn. |
+| 3 | New **11.3** *Do the explanations agree?* | One table that puts permutation importance, SHAP and the ablation (10.7, experiment 5) side by side, with ranks. | The three measures answer different questions, so where they agree the conclusion is stronger. |
+| 4 | New **11.4** *One prediction explained with SHAP* | Two test rows chosen by a rule (the least certain pole-sitter, the most certain driver from P5 or further back), each with a waterfall chart. | The brief asks for at least one local explanation. Two drivers with the same probability for opposite reasons show what the model relies on. |
+| 5 | New **11.5** *LIME* | A LIME explanation of the same Verstappen prediction, compared with SHAP. | The brief's checklist names LIME for the local explanation. Comparing it with SHAP shows that both agree, and that LIME is only approximate. |
+| 6 | New **11.6** *What the explanations show, and what they do not* | The statement that importance is not proof of cause, with two examples. | The brief asks to state this explicitly. |
+| 7 | `report/figures/xai/` | The 7 charts of section 11 are saved for the report. | The XAI charts must also be in the report. |
+
+**Not changed:** sections 0–10. The whole notebook was run top to bottom (645 cells, no errors, no warnings).
