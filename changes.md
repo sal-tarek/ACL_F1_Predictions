@@ -94,3 +94,24 @@ Every change we make to `acl_milestone1.ipynb`, section by section: **where**, *
 | 4 | Q3, Part B answer + the answers table | "should not be credited to the 2022 rules" → "the data does not show that the 2022 rules caused it". "Was it the 2022 rules? mostly not" → "Did the drop come with the 2022 rules? mostly before 2022". | The limitations say Q3 is descriptive only and does not show *why* reliability changed. The answer now says when the drop happened, not what caused it. |
 
 **Not changed:** the methods, the charts and every number. The two `assert` checks stay. Only the four edited code cells were re-run (sections 0–6 in a scratch copy); all other outputs are untouched.
+
+---
+
+## Section 10: Models, finished (14 Oct 2026)
+
+New subsections at the end of section 10, plus small edits to keep the older text correct.
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | New **10.6** *The final model* | Gradient boosting is chosen as the final model. A new check redraws the 60 validation races 1,000 times: gradient boosting is clearly better than the baseline (+0.035 PR-AUC, range +0.002 to +0.068), and not clearly different from the network. | The ablation, the test and the explanations need one final model, chosen before the test. |
+| 2 | New **10.7** *Feature-group ablation* | Four experiments on the 7 feature groups: one group removed (gradient boosting and logistic regression, with ranges), each group alone, every pair removed (heatmap), and all 127 combinations. Decision: all 7 groups (9 features) are kept; `pace_form` is no longer a candidate. | The brief asks for a feature-group ablation. Removing one group at a time can mislead when groups overlap, so the other three experiments show what the groups know alone and together. |
+| 3 | New **10.8** *The final test* | The three models are trained again on 2003–2021 (preprocessing learned again on 2003–2021, the network for a fixed number of epochs) and scored once on 2022–2024, with the thresholds chosen on validation. Test table, every model on every part, ranges, ROC and PR curves, confusion matrices, and the most confident mistakes. | The brief asks for every model's score on the unseen test set. Section 8.2 planned the retraining on 2003–2021. |
+| 4 | New **10.9** *Primary and secondary metric* | PR-AUC is the primary metric and F1 the secondary, with a table and prints as evidence (ROC-AUC is high even for the grid; answering "no podium" for everyone gives 84.9% accuracy). | The brief asks for a justified primary/secondary metric choice. |
+| 5 | Section 10 intro, **10.1**, **10.2** | The intro now says the test part is used once (10.8). 10.1 names F1 as the second score. The ablation reference in 10.2 is now 10.7. | The old text said the test was never used and pointed to 10.6 for the ablation. |
+| 6 | Notebook settings (`kernelspec`) | The kernel name `.venv (3.9.21)` became `.venv`. | Antigravity renames it when it opens the notebook. With the old name, the notebook was marked as changed on opening, so the IDE did not reload it when the file changed on disk and kept showing an old copy. |
+| 7 | **10.4** and **10.5** readings, **10.6** | Network numbers updated to this run: best epoch 133 → 105, PR-AUC over 5 seeds 0.735 → 0.736, range of the six networks 0.730–0.748 → 0.731–0.748. 10.5 and 10.6 no longer say gradient boosting has the best top-3 per race (the network has 71.7% against 71.1%). | The network gives slightly different numbers on different computers (the old outputs came from a Mac). The whole notebook was run again, so the text must match the new outputs. |
+
+| 8 | New **Experiment 5** in 10.7 (*one feature removed*), the 10.7 intro and the decision | Each of the 9 features is removed on its own (gradient boosting with ranges, and logistic regression). No feature makes the model clearly better when removed, so all 9 stay; `grid_minus_quali` changes the score by only −0.001. The intro table lists the fifth experiment, and the decision is now *the final features*. | Experiment 1 removes whole groups. Two groups hold two features, so one of them could be useless while the other is needed. |
+| 9 | **10.9** evidence print and reading | The final model's accuracy is printed next to the accuracy of answering "no podium" for everyone (validation 91.5% against 84.9%, test 89.5% against 84.9%). | It shows with a number why accuracy is not used as a metric. |
+
+**Not changed:** sections 0–9 and the logistic regression and gradient boosting results. The whole notebook was run top to bottom (609 cells, no errors, no warnings). In sections 0–9 only the order of tied rows in a few tables and line breaks in some printed text differ from before; no number changed.
