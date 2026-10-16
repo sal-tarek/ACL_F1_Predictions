@@ -131,3 +131,17 @@ New subsections at the end of section 10, plus small edits to keep the older tex
 | 7 | `report/figures/xai/` | The 7 charts of section 11 are saved for the report. | The XAI charts must also be in the report. |
 
 **Not changed:** sections 0–10. The whole notebook was run top to bottom (645 cells, no errors, no warnings).
+
+---
+
+## Section 10: network numbers that hold on any computer (15 Oct 2026)
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | **10.4** intro | One note: the network's exact numbers depend on the computer, so the text gives rounded values and the outputs give this run's numbers. Logistic regression and gradient boosting gave the same numbers everywhere. | The notebook was run on two computers (Daniel's and a Mac). The network's best epoch was 105 on one and 133 on the other, and a few of its scores moved in the third decimal. |
+| 2 | **10.4** reading | "range 0.731–0.748, best epoch 105" → "about 0.73–0.75", and the best epoch is read from Step 2 (about 100–140). "0.736 ± 0.010" → "about 0.735 ± 0.010". | Same reason. |
+| 3 | **10.5** reading | The network's top-3 per race "slightly higher: 71.7%" → "about the same: 70–72% depending on the run". | On the Mac run it was 70.6%, lower than gradient boosting's 71.1%, so the old sentence was only true on one computer. |
+| 4 | **10.6** reading | The range of gradient boosting minus the network → "about −0.013 to +0.02". | The upper end was +0.021 on one run and +0.022 on the other. |
+| 5 | **10.8** reading | "F1 is 0.674–0.679" → "0.67–0.68"; the network "150 with 89 false alarms" → "about 150 with about 90". | The network's test F1 was 0.677 on one run and 0.673 on the other. |
+
+**Not changed:** every code cell and every output. Only these five text cells were edited. The whole notebook was also run top to bottom on the Mac (645 cells, no errors): apart from the network, every number is the same as in the saved outputs, and only the order of tied rows in a few section 2 tables differs.
