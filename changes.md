@@ -163,3 +163,34 @@ Seven sentences in section 2 described plans that later sections changed. They n
 | 7 | `driver_standings`, *is a row written before or after its race* | Round 1 starts "get 0 points with a flag" → the previous season's final position is used (7.4). | Same as #6. |
 
 **Not changed:** every code cell, every output and every number. Only these 7 markdown cells were edited (one line each), so nothing needed to run again.
+
+---
+
+## Section 4: out-of-date sentence (18 Oct 2026)
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | **4.5** *What the cleaning changed*, "Rows" | The flagged groups are "removed in section 5, after the history features" → "removed in 9.1, when the modelling table is built after the history features". | Section 5 only builds the base table; the rows are removed in 9.1. Same fix as in the section 2 intro. |
+
+**Not changed:** every code cell, every output and every number. Only this one markdown cell was edited, so nothing needed to run again.
+
+---
+
+## Section 7: readings match the outputs again (18 Oct 2026)
+
+The written readings in 7.1–7.9 still quoted the run before the 17 Oct changes (the F-only removal rule moved the model rows from 24,577 to 24,921). 41 numbers now match the outputs printed above them, and 4 sentences were updated. The meaning of every reading is unchanged.
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | **7.1** reading | Slots 4–10: 17% → 16%; AUC 0.885 → 0.887. | Match the printed output. |
+| 2 | **7.2** reading and decision | Coverage 99.8% / 98.4% → 99.7% / 98.3%; 72.5% / 6.3% → 72.6% / 6.4%; gap AUC 0.826 → 0.827. | Same. |
+| 3 | **7.3** reading and decision | N = 20: 0.843 → 0.844; N = 50: 0.830 → 0.831; "within 0.005" → "within 0.006"; experience AUC 0.659 → 0.661; short vs full window 44.1% / 55.8% → 46.3% / 55.7%. "missing for the 683 debuts" → "missing at every debut". | Same; no cell printed 683. |
+| 4 | **7.4** reading and decision | Coverage 96.5% (88.2% + 8.2%) → 96.3% (88.0% + 8.4%); points share 0.836 → 0.837; win rate 0.724 → 0.725; AUC 0.840 → 0.841; round 1: 0.803 / 0.790 → 0.805 / 0.789; "3.5% with no value" → 3.7%. | Match the printed output. |
+| 5 | **7.5** reading | Coverage 98.8% → 98.7%; restarts 22 → 23; points share 0.842 → 0.841. | Same. |
+| 6 | **7.6** reading | Coverage 98.8% → 98.7%; 0.653 / 0.610 → 0.651 / 0.611; 20 races 0.669 → 0.668; driver rate 0.616 → 0.612; Spearman 0.76 → 0.75; crash rate 0.569 → 0.568; AUC 0.669 → 0.668. | Same. |
+| 7 | **7.7** step 3 and reading | "Only real starts count, as for driver form" → every entry counts except failed qualifications and the Indianapolis 500; 41.4% → 41.1%. | The old wording contradicted 7.3; the number matches the output. |
+| 8 | **7.8** reading and decision | Coverage 46% → 45%; same-row AUCs 0.872 / 0.881 → 0.871 / 0.880; 62.0% / 43.2% → 61.8% / 43.5%; 6.7% → 6.5%. The decision now adds: training starts in 2003 (8.1) and the ablation keeps pace (10.7). | Match the output; the "candidate" was decided later. |
+| 9 | **7.9** reading | "only 236 starts" → 240. | Match the printed output. |
+| 10 | **7.10** *How each feature is calculated* | "count real starts only" → count every entry except failed qualifications and the Indianapolis 500. | Same wording fix as #7. |
+
+**Not changed:** every code cell and every output. Only these 11 markdown cells were edited, so nothing needed to run again. Numbers read off charts were spot-checked and already matched.
