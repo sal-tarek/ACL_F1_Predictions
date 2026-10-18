@@ -72,6 +72,54 @@ All numbers and figures come from the notebook `acl_milestone1.ipynb` (section 6
 
 *To be written after feature engineering.*
 
-## 3. Known limitations
+## 3. Model explainability (XAI)
+
+**What is explained.** The final model (gradient boosting trained on 2003–2021) on the 1,359 driver-race rows of the test seasons 2022–2024, races it never saw during training. **Global** methods show what the model relies on overall; **local** methods show why it gave one driver one probability. Full details are in section 11 of the notebook.
+
+**In short:** the model is mainly a grid model. Where a driver starts matters most; recent results (championship position, driver form, team form, pace) correct it; and its biggest mistakes come from what happens during the race, which it cannot know.
+
+### 3.1 Global: what the model relies on
+
+**Permutation importance.** One feature at a time is shuffled across the test rows, so it no longer says anything about the driver, and the drop in test PR-AUC is measured (20 shuffles each). Shuffling the grid slot lowers PR-AUC from 0.705 to about 0.37 (**−0.339**). The championship position comes second (−0.018); every other feature costs 0.006 or less, within the noise of the shuffles.
+
+**This understates features that overlap.** Driver form, the championship position, team form and pace carry much of the same information (correlations up to 0.80), so when one is shuffled the model uses the others. Shuffled **together**, these four groups lower PR-AUC by **0.124**, almost four times the sum of their single drops (0.033). All features except the grid together cost **0.190**, about half as much as the grid: recent results are the model's second source of information, not an unimportant one.
+
+![Permutation importance of single features and groups](figures/xai/xai_08_group_permutation.png)
+
+**SHAP.** SHAP splits each prediction into one contribution per feature: a positive contribution pushes the driver towards the podium, a negative one away from it. Contributions are on the model's log-odds scale and, for tree models, add up exactly to the model's output. Averaged over the test rows, the grid moves predictions most (1.04), followed by the championship position (0.37), driver form (0.28), team form (0.25), pace (0.24) and the qualifying gap (0.23). Reliability (0.13), career starts (0.11) and the grid penalty (0.01) matter less.
+
+![SHAP values for every test row](figures/xai/xai_03_shap_beeswarm.png)
+
+**What the effects look like.**
+- **Directions match the feature analysis:** a front grid slot, a high championship position, recent podiums and a strong team push up; a slow qualifying lap or race pace pushes down.
+- **The grid effect is curved:** pole adds about +3, the push falls to about 0 around P8, and from P12 back it is flat (P12 and P20 are treated the same). A linear model such as logistic regression cannot represent this.
+- **Other effects work in steps:** leading the championship and being 2nd count the same, and the push turns negative from about 11th; driver form stops adding after about five podiums in the last ten starts.
+
+**Are the explanations reliable?** Permutation importance, SHAP and the ablation (models trained again without each feature) all rank the grid first. They order the middle features differently, but those differences are small and within noise. The SHAP ranking is also nearly identical in each test season (rank correlation 0.93–0.95), so it is not driven by one season.
+
+### 3.2 Local: single predictions
+
+**SHAP waterfall.** Two drivers on the podium with similar probabilities, for opposite reasons:
+- **Russell, Canada 2024, from pole (0.48):** pole adds +3.31; every other feature adds less than 0.2 either way.
+- **Verstappen, Belgium 2023, from P6 after a grid penalty (0.54):** the grid adds only +0.63. More comes from his recent form (a podium in each of his last 10 starts, +0.92) and from leading the championship (+0.89).
+
+![SHAP waterfall: Verstappen, Belgium 2023](figures/xai/xai_06_waterfall_from_back.png)
+
+**A confident prediction that was wrong.** The model's most confident miss in the test seasons is Verstappen at Australia 2024: pole, probability 0.86, retired with a brake failure. Every feature pushed up (grid +2.89, championship +0.77, form +0.59), so the explanation is sensible; the cause of the miss is not in the information available before the race.
+
+![SHAP waterfall: Verstappen, Australia 2024](figures/xai/xai_10_waterfall_miss.png)
+
+**LIME** fits a simple model around one prediction to approximate the real one. For Verstappen at Belgium 2023 it agrees with SHAP on the direction of every feature, with "grid ≤ 6" as the largest weight (+0.18 in probability). Its simple model gives 0.36 where the real model gives 0.54, so LIME is used as a cross-check and SHAP, which is exact for tree models, as the main method.
+
+**A whole race.** At Australia 2024 the model's top three were exactly the top three on the grid; the other features only reorder neighbours, and every driver behind P10 gets 2% or less. This shows the model's main limitation: it improves the probabilities but rarely changes who is in the top three. On the test seasons, its top three per race reach the podium 64.7% of the time, the same as the top three on the grid.
+
+### 3.3 What these explanations do not show
+
+- **Importance is not causation.** A feature being important to the model is **not proof that it causes podium finishes**; it only means that the model relies on it to make predictions. For example, leading the championship does not make a driver faster: a fast car and a strong driver cause both the championship position and the podiums, and the model uses the championship position as a sign of them.
+- **The grid slot mixes two things:** the advantage of starting at the front and how fast the car was in qualifying. The model cannot separate them.
+- **Overlapping features share their importance,** so a feature that looks unimportant alone can still carry real information.
+- **The explanations hold for this model and these seasons** (2022–2024); another model or other seasons could rely on the features differently.
+
+## 4. Known limitations
 
 *To be written.*
