@@ -204,3 +204,20 @@ The written readings in 7.1–7.9 still quoted the run before the 17 Oct changes
 | 1 | **8.3** *Reading*, first bullet | "Training is slightly lower (14.1% against 15.1%)" → "(14.0% against 15.0%)". | Match the table printed above it (same cause as the section 7 refresh). |
 
 **Not changed:** every code cell and every output. Only this one markdown cell was edited.
+
+---
+
+## Section 9: readings match the outputs again (19 Oct 2026)
+
+Same cause as section 7: the readings quoted the run before the 17 Oct row rule. 21 numbers now match the outputs, and 2 phrases were updated.
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | **9** intro, step table | "9.1 Rows: keeps the drivers who started" → keeps every driver except those who failed to qualify. | The 17 Oct rule. |
+| 2 | **9.2** reading | "150 of 8,909 rows" → 8,966; `grid_minus_quali` 21 → 24; "141 of the 144 gaps" → 145 of 148. | Match the printed tables. |
+| 3 | **9.3** intro, *What a percentile is* | Limits −0.164 / +0.319 → −0.165 / +0.356; Caterham's 0.92 "becomes 0.319" → 0.356. | Match the printed limits. |
+| 4 | **9.3** reading | 106 → 107 rows above 7%; "7 of 106 (6.6%)" → 7 of 107 (6.5%); limits as in #3; 127 → 126 training rows; pace limit 1.053 → 1.054; 128 → 130 training rows. | Match the printed tables. |
+| 5 | **9.4** reading | "change by at most a few thousandths" → adds "except for `champ_pos` (next point)"; `team_mech_rel` −0.26…0.92 → −0.23…0.92, capped −0.16…0.32 → −0.17…0.36; `pace_form` 1.053 → 1.054. | The champ_pos mean moves by 0.22, as the next point says; the rest match the table. |
+| 6 | **9.5** intro | `team_mech_rel` "about −0.16 to +0.32" → −0.17 to +0.36. | Match the capped range. |
+
+**Not changed:** every code cell and every output. Only these 6 markdown cells were edited.
