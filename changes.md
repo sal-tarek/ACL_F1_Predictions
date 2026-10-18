@@ -248,3 +248,14 @@ Same cause as sections 7 and 9: the readings quoted the run before the 17 Oct ro
 | 16 | **10.10** reading | Models' ROC-AUC 0.932–0.941 → 0.932–0.940; PR-AUC gap +0.069 / +0.070 → +0.070 / +0.072; "63% right, 72% found" → 66% right, 63% found; F1 over the grid +0.030 → +0.035 on test for the best model, and the final model's test F1 (0.645) is just below the grid's (0.647); accuracy 84.9% / 91.5% / 89.5% → 85.0% / 91.8% / 89.6%. | Match the metrics table and the prints. |
 
 **Not changed:** every code cell and every output. Only these 16 markdown cells were edited. Every decision stays the same: gradient boosting is the final model and all 9 features are kept; only the reasons quoted for them now match the outputs.
+
+---
+
+## Section 12 and report section 7: two phrases that overclaimed (19 Oct 2026)
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | **12** intro, step 1; **12.2** reading, last bullet; **report** section 7 | "Any of them can be missing" / "Every feature has a fill rule" → any feature can be missing except `grid_clean` and `career_starts`, which are always known at the cutoff (the grid is set, career starts are a count); the 7 others each have a fill rule. | 9.2 has no fill rule for these two, because they are never missing at the cutoff. The old wording promised more than the function does. |
+| 2 | **12.2** reading; **report** section 7 | Zhou's filled `champ_pos` of 20 "behind every other driver" → behind every driver who has a standing; Albon, Magnussen and Hülkenberg (back after a season out) had none either and are also filled with 20. | Checked in the raw 2021 final standings: these three have no 2021 standing, so they get the same fill. |
+
+**Not changed:** every code cell and every output. Only markdown cells 682 and 689 were edited. The report PDF was exported again from report.md (still 28 pages).

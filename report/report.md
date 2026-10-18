@@ -392,10 +392,10 @@ The test part (2022–2024) was used once, with every choice fixed beforehand.
 
 ## 7. Inference function
 
-`predict_podium(record)` (§12) predicts one new record, one driver in one race at the cutoff. It takes the 9 features in their original units (any of them may be missing), fills the gaps with the rules of section 4.2 using values learned from 2003–2021, caps and scales them, runs the final model, and returns the podium probability, the yes/no answer at the threshold chosen on validation (0.421), and a table of the values the model actually used. A missing `champ_pos` is filled with the worst position in the race + 1, so for such a record the function also takes the worst championship position among the other drivers.
+`predict_podium(record)` (§12) predicts one new record, one driver in one race at the cutoff. It takes the 9 features in their original units (any of them may be missing except `grid_clean` and `career_starts`, which are always known at the cutoff), fills the gaps with the rules of section 4.2 using values learned from 2003–2021, caps and scales them, runs the final model, and returns the podium probability, the yes/no answer at the threshold chosen on validation (0.421), and a table of the values the model actually used. A missing `champ_pos` is filled with the worst position in the race + 1, so for such a record the function also takes the worst championship position among the other drivers.
 
 - **Complete record:** Verstappen, Belgian Grand Prix 2023, every feature known. Probability **0.54**, answer "podium" (he finished on the podium).
-- **Partially-missing record:** Zhou, Bahrain Grand Prix 2022, his first race, with driver form, championship position and pace missing. They are filled with 0, 20 (behind every other driver) and the training median 1.000. Probability **0.00** from 15th on the grid, answer "no podium" (correct).
+- **Partially-missing record:** Zhou, Bahrain Grand Prix 2022, his first race, with driver form, championship position and pace missing. They are filled with 0, 20 (behind every driver with a standing; three other drivers without one also got 20) and the training median 1.000. Probability **0.00** from 15th on the grid, answer "no podium" (correct).
 
 Both probabilities are exactly the ones the notebook computed for these rows in the final test, so the function repeats the pipeline's steps correctly.
 
