@@ -194,3 +194,13 @@ The written readings in 7.1–7.9 still quoted the run before the 17 Oct changes
 | 10 | **7.10** *How each feature is calculated* | "count real starts only" → count every entry except failed qualifications and the Indianapolis 500. | Same wording fix as #7. |
 
 **Not changed:** every code cell and every output. Only these 11 markdown cells were edited, so nothing needed to run again. Numbers read off charts were spot-checked and already matched.
+
+---
+
+## Section 8: one number pair (19 Oct 2026)
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | **8.3** *Reading*, first bullet | "Training is slightly lower (14.1% against 15.1%)" → "(14.0% against 15.0%)". | Match the table printed above it (same cause as the section 7 refresh). |
+
+**Not changed:** every code cell and every output. Only this one markdown cell was edited.
