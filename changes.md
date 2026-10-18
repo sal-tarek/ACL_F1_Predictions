@@ -145,3 +145,21 @@ New subsections at the end of section 10, plus small edits to keep the older tex
 | 5 | **10.8** reading | "F1 is 0.674–0.679" → "0.67–0.68"; the network "150 with 89 false alarms" → "about 150 with about 90". | The network's test F1 was 0.677 on one run and 0.673 on the other. |
 
 **Not changed:** every code cell and every output. Only these five text cells were edited. The whole notebook was also run top to bottom on the Mac (645 cells, no errors): apart from the network, every number is the same as in the saved outputs, and only the order of tied rows in a few section 2 tables differs.
+
+---
+
+## Section 2: out-of-date sentences (18 Oct 2026)
+
+Seven sentences in section 2 described plans that later sections changed. They now say what the notebook actually does.
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | **2. Audit and cleaning**, intro | The flagged rows are "removed in section 5" → "removed in 9.1, when the modelling table is built after the history features". | Section 5 only builds the base table. The rows are removed in 9.1. |
+| 2 | `results`, *Summary of anomaly checks* | "if an all-years training window is chosen, shared-drive cars would need to be collapsed" → the all-seasons version in 10.8 keeps them as recorded, because every model scores each row on its own (as section 3 says). | 10.8 trained on 1950–2018 without collapsing them, so the old sentence contradicted it. |
+| 3 | `qualifying`, *summary of checks* | "**Plan for features** … we may build" → "**Features built from it** … section 7.2 builds"; "we will test it in the ablation yet to come" → the features are `quali_gap_pct` and `grid_minus_quali`, and the ablation (10.7) tests them. | The plan was carried out in 7.2 and 10.7. |
+| 4 | `races`, *missing values*, "One caveat" | "This only matters if the training window reaches 2021" → the model's seasons include 2021 (validation, final training) and 2022 (test), so on these 6 sprint weekends `grid_minus_quali` partly reflects the sprint; 6 of 428 races, so the effect is small. | The training window does reach 2021. |
+| 5 | *circuits and drivers: countries and nationalities* | Removed "the `is_home` feature must use the same map"; now says the model has no home-race feature because Q2 found no home advantage. "excluded from both" → "excluded from Q2". | No `is_home` feature exists in the notebook. |
+| 6 | `driver_standings`, *structure, keys and what a row means* | Round 1 "start at 0 and are marked with a flag" → the driver's final position of the previous season is used (7.4). | 7.4 changed the round-1 rule; section 3 was already fixed on 13 Oct, but section 2 still had the old rule. |
+| 7 | `driver_standings`, *is a row written before or after its race* | Round 1 starts "get 0 points with a flag" → the previous season's final position is used (7.4). | Same as #6. |
+
+**Not changed:** every code cell, every output and every number. Only these 7 markdown cells were edited (one line each), so nothing needed to run again.
