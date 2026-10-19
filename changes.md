@@ -278,3 +278,19 @@ Same cause as sections 7 and 9: the readings quoted the run before the 17 Oct ro
 | 10 | **report** figures | Every figure re-exported from the Kaggle outputs; `mod_08_random_split` and the five `xai_*_C` figures added; `mod_08_ablation_pairs`, `mod_09_ablation_combinations`, `mod_10_ablation_feature_removed` and `prep_01_fill_cap_effect` removed (their experiments or chart no longer exist). PDF exported again from report.md. | The figures were from the old notebook. |
 
 **Not changed:** the code and outputs of sections 0–10, and every decision in them. The pace group is still labelled "pace (candidate)" in the code (handoff, item 5); the report calls it "pace". On a local computer with scikit-learn 1.9.1, option C's tuning chose depth 3 instead of depth 2; the Kaggle run matches Salma's run.
+
+---
+
+## XAI additions after the review (19 Oct 2026, second Kaggle run)
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | **10.3** reading | "Trees can use the two flags…" → a tree *could* use them, but 11.2 shows option C's model never splits on them; its gain comes from the features with real values in every season. | The old sentence contradicted the XAI results. |
+| 2 | **11.2**, new chart 5 | The grid's SHAP contribution coloured by team form, and a table by grid slot and team form, for A and C (`xai_13_grid_team_interaction`). | Gradient boosting was chosen partly for interactions; nothing showed one. Result: a small interaction (the grid adds up to 0.5 less for a strong team at the same slot); both models are close to additive. |
+| 3 | **11.3**, new *The baseline* | Logistic regression's contributions (weight × scaled value, log-odds) next to the SHAP sizes, with rank agreement. | It ties gradient boosting on the test part and was not explained. Result: same top features (rank agreement 0.70 in A, 0.59 in C), different amounts. |
+| 4 | **11.3**, new *Can the probabilities be read as chances?* | Calibration table and chart on the test part, expected vs real podiums, Brier score, sum of probabilities per race (`xai_14_calibration`). | The readings called probabilities "chances" and C "less extreme" without a check. Result: A is well calibrated; C is under-confident above about 0.4. |
+| 5 | **11.4** miss reading, **11.2** reading, 11 overview table | "If well calibrated, one in six at 0.84 and more than one in three at 0.63" → the calibration results (82% of A's predictions above 0.8 reached the podium; 78% of C's predictions in 0.6–0.7). | The calibration check showed the C half of the claim was wrong. |
+| 6 | **10.9** code comment | "keeps the names used in section 11" → kept for reference only. | Sections 11 and 12 no longer use `gb_final`. |
+| 7 | **report** §6.2, §6.3, §6.4, §8 | The interaction, the baseline comparison and calibration added with their figures; the "one in six" claim corrected; a limitation on C's cautious probabilities. XAI figures and the PDF exported again from the second Kaggle run. | Keep the report in line with the notebook. |
+
+**Not changed:** every other output. The second Kaggle run gave the same outputs as the first in every cell that existed before.

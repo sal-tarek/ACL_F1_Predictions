@@ -459,7 +459,7 @@ SHAP splits each prediction into one contribution per feature: a positive contri
 - **Option A uses all 9 features.** After the grid come the championship position, team form, driver form, the qualifying gap and pace, then reliability, career starts and the grid penalty.
 - **Option C uses only 4 of its 11 features:** the grid, team form, driver form and the championship position. The qualifying gap, pace and reliability move its score by 0.01 at most, and the other four features not at all.
 - **Why option C uses so few.** Its model is small and stops early: 100 trees of depth 2 at a learning rate of 0.03 (option A has 300 trees), and its validation loss is still falling at the 100th tree (§10.3). And in its training seasons the qualifying and pace values are mostly filled (65% and 61%), which lowers their AUC from 0.830 to 0.678 and from 0.852 to 0.680 (section 4.3), while team form, driver form and the standings keep theirs (0.833–0.839). So those three win the splits.
-- **Option C's probabilities are less extreme.** With few small trees, its scores stay closer to the average, so it gives a pole-sitter 0.62 where option A gives 0.84 (section 6.4).
+- **Option C's probabilities are less extreme.** With few small trees, its scores stay closer to the average, so it gives a pole-sitter 0.62 where option A gives 0.84 (section 6.4). The calibration check (section 6.3) shows that this makes it under-confident.
 
 **What the effects look like.**
 - **Directions match the feature analysis (section 3), in both models:** a front grid slot, a high championship position, recent podiums and a strong team push up; in option A a slow qualifying lap or race pace and a team that breaks down often push down.
@@ -472,7 +472,11 @@ SHAP splits each prediction into one contribution per feature: a positive contri
 
 ![SHAP: championship position and driver form](figures/xai/xai_09_shap_champ_form.png)
 
-### 6.3 Are the explanations reliable? (§11.3)
+**An interaction: the grid and team form.** Gradient boosting can learn that the effect of one feature depends on another. Colouring the grid's SHAP contribution by team form shows a small one in both models: at the same slot from P1 to about P7, a driver of a weak team gets a larger push from the grid than a driver of a strong team (up to about 0.5 in option A, 0.3 in option C), and behind P11 a strong team loses a little less. A strong team already gets its push from team form and the standings, so the grid has less to add; for a weak team, a front slot is almost the only sign of a podium. The interaction is small next to the grid's own range of about 4 points, so both models are close to additive: **their advantage over logistic regression comes mainly from curved effects, and only a little from interactions.**
+
+![SHAP: the grid slot coloured by team form](figures/xai/xai_13_grid_team_interaction.png)
+
+### 6.3 Are the explanations reliable, and can the probabilities be trusted? (§11.3)
 
 - **Three measures agree on the top.** Permutation importance, SHAP and the ablation (section 5.4, models trained again without each group) all rank the grid first, in both models.
 - **Permutation importance and SHAP agree closely** on the order of the groups (rank correlation 0.79 in A, 0.96 in C), because they measure the same trained model on the same rows.
@@ -480,6 +484,15 @@ SHAP splits each prediction into one contribution per feature: a positive contri
 - **The explanations do not depend on one season.** The SHAP ranking is almost identical in 2022, 2023 and 2024 (rank correlation 0.98–1.00 in A, 0.99–1.00 in C), so it is not driven by Red Bull's dominant 2023.
 
 ![SHAP importance in each test season](figures/xai/xai_12_shap_by_season.png)
+
+**The baseline relies on the same top features, by a different route.** On the test part logistic regression scores as well as gradient boosting (0.716 against 0.717 in A, 0.715 against 0.704 in C), so its contributions (weight × scaled value, in the same log-odds units as SHAP) were compared with the SHAP sizes. Both put the grid first, and in option A the championship position second; logistic regression leans on them even more (1.45 and 0.48 against 1.04 and 0.34). The rankings agree fairly well in option A (rank correlation 0.70) and less in option C (0.59): there, logistic regression still uses the filled qualifying and pace values (0.14 each), which a straight line cannot ignore, and gives `has_pace_data` a large but constant shift that changes no ranking on the test part. Different models reach the same score with the features in different amounts, because the history features overlap.
+
+**Can the probabilities be read as chances? (calibration)** The test rows were grouped by their predicted probability and compared with the share that really reached the podium.
+- **Option A is well calibrated:** in every group the real rate is within the 95% range of the prediction (for example 44% predicted against 45% real, and 84% against 82% for its most confident predictions), and it expects 205 podiums against 204 real.
+- **Option C is under-confident at the top:** above about 0.4 its drivers reach the podium more often than predicted (55% against 70%, 62% against 78%, outside the 95% range), and its highest predictions are only about 0.63. Its ranking is still good, because the order of the drivers is right; only the size of its probabilities is too cautious (Brier score 0.0737 against 0.0690).
+- In both models the probabilities of a race add up to 3.02 on average (2.6 to 3.4 in single races), although nothing forces them to.
+
+![Calibration on the test part](figures/xai/xai_14_calibration.png)
 
 ### 6.4 Local: single predictions with SHAP (§11.4)
 
@@ -502,7 +515,7 @@ Rows are chosen by a rule, not by hand: for each model, the pole-sitter it was l
 **Confident predictions that were wrong.**
 - **Option A: Verstappen, Australia 2024, from pole: probability 0.84, retired with a brake failure** (classified 19th). Every feature pushed up (grid +2.86, championship +0.71, form +0.57, team +0.33, qualifying gap +0.32), so the explanation is sensible; the cause of the miss is not in the information available before the race.
 - **Option C: Verstappen, Austria 2024, from pole: probability 0.63, finished 5th.** Again every feature pushed up (grid +1.95, team form +0.52). Option C's most confident miss is less confident than option A's, because its probabilities are less extreme.
-- If the probabilities are well calibrated, about one in six predictions at 0.84 misses: one confident miss is not a sign that a model is wrong; many would be.
+- **A high probability is not a promise.** Option A is well calibrated: of its predictions above 0.8, 82% reached the podium, so about one in five misses. Option C's 0.63 understated Verstappen's chance, since 78% of its predictions between 0.6 and 0.7 reached the podium. One confident miss is not a sign that a model is wrong; many would be.
 
 ![SHAP waterfall: Verstappen, Australia 2024, option A](figures/xai/xai_10_waterfall_miss.png)
 
@@ -567,7 +580,8 @@ For Zhou, the gaps are filled with 0 (no podium yet), 20 (the worst position in 
 
 **The models**
 - **Mainly grid models.** The grid slot is by far the most important input. The models clearly beat the grid on ranking (PR-AUC), but picking 3 drivers per race they do little better than the top 3 on the grid (test: 64.2–65.2% for the two models carried forward, against 64.7%).
-- **Each row is scored on its own.** No model knows that a race has exactly 3 podiums, so the probabilities within a race do not add up to 3.
+- **Each row is scored on its own.** No model knows that a race has exactly 3 podiums, so the probabilities within a race do not add up to exactly 3 (2.6 to 3.4 on the test part).
+- **Option C's probabilities are too cautious.** It ranks the drivers well, but above about 0.4 its drivers reach the podium more often than it predicts (section 6.3), so its probabilities should not be read as exact chances; option A's can.
 - **What happens in the race is unknown at the cutoff.** Crashes, breakdowns, safety cars, weather and strategy decide many podiums, and the models' most confident mistakes are such cases (Verstappen, Australia 2024, pole and a brake failure).
 - **Small evaluation sets.** Validation has 60 races and the test 68, so many differences are within luck: gradient boosting is not clearly better than the baseline on the test, and options A and C are not clearly different.
 - **Results depend slightly on the computer.** The network's numbers move with its random start and with the maths libraries (mean of 5 seeds 0.733 ± 0.020 in option C). The tree models are deterministic, but on another computer with another scikit-learn version the tuning of option C chose different settings; ties to three decimals go to the smaller model to limit this. The numbers in this report come from the submitted Kaggle run.
