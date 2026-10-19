@@ -610,3 +610,139 @@ For Zhou, the gaps are filled with 0 (no podium yet), 20 (the worst position in 
 - They describe associations, not causes, and rest on small samples per circuit (about 10 races per period in Q1) and per team (Q3); Q2 relies on mapping nationalities to countries, and Q3 on grouping the status labels, where unclear labels such as `Retired` only give an upper bound.
 
 **The explanations** describe the models, not Formula 1: an important feature is not proof that it causes podium finishes (section 6.7).
+
+---
+
+## Appendix: the other figures of the notebook
+
+The brief asks for every plot in both the notebook and the report. The figures above carry the analysis; these are the remaining plots of the notebook, in notebook order, each labelled with the notebook section it comes from, where its full explanation is.
+
+### 2. Audit and cleaning, table by table
+
+**results: types and missing values**
+
+![results: types and missing values](figures/appendix/app_01.png)
+
+**results: types and missing values**
+
+![results: types and missing values](figures/appendix/app_02.png)
+
+**results: columns that are still text after reading `\N` as missing**
+
+![results: columns that are still object after reading \N as missing](figures/appendix/app_03.png)
+
+**results: what the formats of `time` mean**
+
+![time: what the string formats mean](figures/appendix/app_04.png)
+
+**results: `positionText`**
+
+![results: positionText](figures/appendix/app_05.png)
+
+**results: `positionText`**
+
+![results: positionText](figures/appendix/app_06.png)
+
+**results: the 2 rows where `position` is missing but `positionText` is a number**
+
+![The 2 rows where position is missing but positionText is a number](figures/appendix/app_07.png)
+
+**results: one row per driver per race**
+
+![results: one row per driver per race](figures/appendix/app_08.png)
+
+**results: grid**
+
+![results: grid](figures/appendix/app_09.png)
+
+**results: grid**
+
+![results: grid](figures/appendix/app_10.png)
+
+**qualifying: key checks**
+
+![qualifying: key checks](figures/appendix/app_11.png)
+
+**races**
+
+![races](figures/appendix/app_12.png)
+
+**races: data types and keys**
+
+![races: data types and keys](figures/appendix/app_13.png)
+
+**races: missing values**
+
+![races: missing values](figures/appendix/app_14.png)
+
+**circuits: keys and checks**
+
+![circuits: keys and checks](figures/appendix/app_15.png)
+
+**drivers**
+
+![drivers](figures/appendix/app_16.png)
+
+**status: structure, keys and how often each label is used**
+
+![status: structure, keys and how often each label is used](figures/appendix/app_17.png)
+
+**driver_standings: structure, keys and what a row means**
+
+![driver_standings: structure, keys and what a row means](figures/appendix/app_18.png)
+
+**driver_standings: is a row written before or after its race**
+
+![driver_standings: is a row written before or after its race](figures/appendix/app_19.png)
+
+**constructor_standings**
+
+![constructor_standings](figures/appendix/app_20.png)
+
+**constructor_results: structure, keys, coverage and the status column**
+
+![constructor_results: structure, keys, coverage and the status column](figures/appendix/app_21.png)
+
+**lap_times**
+
+![lap_times](figures/appendix/app_22.png)
+
+**pit_stops**
+
+![pit_stops](figures/appendix/app_23.png)
+
+### 4. EDA after cleaning
+
+**4.3 Column types**
+
+![4.3 Column types](figures/appendix/app_24.png)
+
+### 7. Feature engineering
+
+**7.2 Qualifying**
+
+![7.2 Qualifying](figures/appendix/app_25.png)
+
+**7.2 Qualifying**
+
+![7.2 Qualifying](figures/appendix/app_26.png)
+
+**7.3 Driver form**
+
+![7.3 Driver form](figures/appendix/app_27.png)
+
+**7.3 Driver form**
+
+![7.3 Driver form](figures/appendix/app_28.png)
+
+**7.4 Driver standings**
+
+![7.4 Driver standings](figures/appendix/app_29.png)
+
+**7.5 Team form**
+
+![7.5 Team form](figures/appendix/app_30.png)
+
+**7.6 Reliability**
+
+![7.6 Reliability](figures/appendix/app_31.png)

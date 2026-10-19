@@ -305,3 +305,13 @@ Same cause as sections 7 and 9: the readings quoted the run before the 17 Oct ro
 | 2 | **report** figures q1–q3 | All 12 exported from the Kaggle run's outputs. | The local copies had been rewritten by a local test run; the Kaggle run is the submitted one. |
 
 **Not changed:** the notebook. The PDF was exported again.
+
+---
+
+## Report: appendix with every other notebook figure (19 Oct 2026)
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | **report**, new *Appendix: the other figures of the notebook* | The 31 notebook plots that were not in the report (23 from the table-by-table audit of section 2, 1 from 4.3, 7 secondary evidence charts from section 7), exported from the Kaggle run into `report/figures/appendix/`, each labelled with its notebook section. | The checklist asks for all plots in both the notebook and the report. The report now holds all 88 plots of the notebook. |
+
+**Not changed:** the notebook and the main text of the report. The PDF was exported again.
