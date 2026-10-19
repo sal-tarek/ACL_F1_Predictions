@@ -80,6 +80,10 @@ All numbers and figures come from the notebook `acl_milestone1.ipynb`, as run on
 
 **Approach.** A front-row start is grid slot 1 or 2. For each circuit we count how often front-row starters reach the podium, in 1980–2013 and in 2014–2024. Two corrections make circuits comparable: circuits with few races are pulled towards the normal rate (10 "pretend" starts at that rate), and each circuit is compared with the normal rate *of the seasons it was used in*, because cars broke down far more often in the 1980s than later. The 1980 start is when the staggered two-wide grid became standard, so grid 1–2 always means the front row.
 
+Why the normal rate must be the one of the circuit's own seasons: front-row conversion rose from about 40% in the early 1980s to about 75% after 2014 (dashed lines: the two period averages).
+
+![Front-row conversion per season](figures/q1/q1_02_conversion_by_season.png)
+
 **Qualifying position or grid slot?** We use the grid slot. In 96% of cases they agree, but drivers who qualified on the front row and were moved back (for example by a penalty) reached the podium only **31%** of the time, against **73%** for drivers who kept their slot.
 
 ![Podium rate by front-row case](figures/q1/q1_01_quali_vs_grid.png)
@@ -92,6 +96,10 @@ All numbers and figures come from the notebook `acl_milestone1.ipynb`, as run on
 ![Top circuits by points above normal](figures/q1/q1_03_top_circuits.png)
 
 **Did the ranking change after 2014?** For the 16 circuits used in both periods, the two rankings look very different (rank correlation ρ = −0.04). But each circuit has only about 10 races per period, so a ranking shuffles a lot by chance alone: in a simulation where no circuit changed, rankings were as shuffled as reality **29%** of the time (17–31% across all settings). **The change can be explained by luck, so the data cannot show that the hybrid era changed which circuits convert best.**
+
+The two rankings side by side: only Suzuka keeps its place, and the lines cross in every direction.
+
+![Rank before and after 2014](figures/q1/q1_04_before_after_ranks.png)
 
 ![Luck test](figures/q1/q1_05_luck_test.png)
 
@@ -107,9 +115,17 @@ All numbers and figures come from the notebook `acl_milestone1.ipynb`, as run on
 
 ![Why the starting position must be controlled](figures/q2/q2_01_why_control.png)
 
+Home against away from each starting slot: in some slots home drivers do better, in others worse, and the home ranges (black lines) are wide because home starts are few.
+
+![Home vs away from the same starting slot](figures/q2/q2_02_by_slot.png)
+
 **Answer. No detectable home advantage.** Compared with themselves, from the same slot and decade, drivers reach the podium about as often at home as elsewhere: odds ratio **1.00** (95% range 0.77–1.27). Even if there is a home advantage, it is small: at most about **6 percentage points** for a P3 starter (46% → 52%). All 7 checks (other start years, including the Indianapolis 500, other matching rules) agree.
 
 ![Home effect on podium odds](figures/q2/q2_03_home_effect.png)
+
+The 7 checks: every version's 95% range includes 1 (no difference).
+
+![Each driver against themselves: every version](figures/q2/q2_04_checks.png)
 
 **Grain, missingness, cutoff.** One driver per race; the home flag has no missing values once every nationality is mapped. The starting position and the home flag are both known before the race.
 
@@ -129,6 +145,10 @@ All numbers and figures come from the notebook `acl_milestone1.ipynb`, as run on
 **Context.** Cars did become more reliable (8.8% → 5.4% of starts, a clear drop), but most of the improvement happened **before** the 2022 rules: against 2019–2021 the change is not clear (5.9% → 5.4%). McLaren, the Faenza team (Toro Rosso / AlphaTauri / RB) and Red Bull broke down clearly less after 2022; no team became clearly less reliable.
 
 ![Mechanical-retirement rate per season](figures/q3/q3_01_rate_by_season.png)
+
+The change per team: McLaren, the Faenza team and Red Bull broke down clearly less after 2022 (green); for every other team the range includes no change.
+
+![Change in mechanical retirements per team](figures/q3/q3_03_team_change.png)
 
 **Grain, missingness, cutoff.** One car start per race, 2014–2024; every status label has a group, so nothing is missing. The reason a race ended is only known after the race, so it is never a model input; here it is the answer to a descriptive question.
 

@@ -294,3 +294,14 @@ Same cause as sections 7 and 9: the readings quoted the run before the 17 Oct ro
 | 7 | **report** §6.2, §6.3, §6.4, §8 | The interaction, the baseline comparison and calibration added with their figures; the "one in six" claim corrected; a limitation on C's cautious probabilities. XAI figures and the PDF exported again from the second Kaggle run. | Keep the report in line with the notebook. |
 
 **Not changed:** every other output. The second Kaggle run gave the same outputs as the first in every cell that existed before.
+
+---
+
+## Report: every question chart, from the Kaggle run (19 Oct 2026)
+
+| # | Where | What we changed | Why |
+|---|---|---|---|
+| 1 | **report** §2 (Q1, Q2, Q3) | Added the five question charts that were not in the report (`q1_02_conversion_by_season`, `q1_04_before_after_ranks`, `q2_02_by_slot`, `q2_04_checks`, `q3_03_team_change`), each with one sentence. | The brief asks for all plots of the data-engineering answers in both the notebook and the report. |
+| 2 | **report** figures q1–q3 | All 12 exported from the Kaggle run's outputs. | The local copies had been rewritten by a local test run; the Kaggle run is the submitted one. |
+
+**Not changed:** the notebook. The PDF was exported again.
