@@ -5,6 +5,9 @@ what we added, what we kept as-is on purpose, and what we found in the data whil
 checking it. The numbers come from a full scan of the 9 CSVs and from the loaded graph
 (local Neo4j 2026.10.2, 9 Nov 2026).
 
+For how each M1 EDA finding affects the graph and the queries, see
+[EDA_REVIEW.md](EDA_REVIEW.md).
+
 **Result of the load:** 51,113 nodes and 163,510 relationships, matching the brief.
 Every property has exactly one type, no value is `\N` or an empty string, and a second
 run changes nothing.
@@ -14,7 +17,8 @@ run changes nothing.
 ## 1. Value cleaning: what we changed and what we kept
 
 **Rule: we only remove spaces from the start and end of values. We never rewrite a
-value.** The brief says nothing about cleaning, and the grader's private queries are
+value.** M1 did normalise `United States` → `USA` and `Argentinian ` → `Argentine`, but on
+a cleaned copy for the model; the graph keeps the source values. The brief says nothing about cleaning, and the grader's private queries are
 presumably written against the raw data. So spelling differences stay as they are, and
 are listed here so nobody is surprised by them.
 
