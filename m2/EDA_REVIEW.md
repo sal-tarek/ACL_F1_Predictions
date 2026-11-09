@@ -163,7 +163,11 @@ keeping the source data faithfully or by a rule in the queries.
 13. **Indy 500 is in the graph.** Exclude it by race name only when a question asks for that.
 14. **A team can differ between Qualifying and Result** (Marussia 2015). Take the constructor from the fact the question is about.
 15. **Strict `<` for "ahead of"**, so shared places count for nobody.
-16. **Every returned column needs `AS` with the brief's exact name.** Round decimals to no fewer than 2 places.
+16. **Sort by an exact average.** Neo4j's `avg()` can be off in the last digit
+    (`4.000000000000001`), which flips the order of two drivers whose averages are really
+    equal (Vettel and Stewart at Monaco are both 6.25). Use
+    `toFloat(sum(x)) / count(x)` when a tie-break depends on it.
+17. **Every returned column needs `AS` with the brief's exact name.** Round decimals to no fewer than 2 places.
 
 ## 5. What this means for the brief's 5 queries
 
