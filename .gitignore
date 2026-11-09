@@ -3,3 +3,6 @@ data/
 .DS_Store
 __pycache__/
 .ipynb_checkpoints/
+
+m2/*.csv
+m2/config.txt
