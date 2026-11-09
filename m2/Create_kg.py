@@ -33,25 +33,27 @@ def read_config(path):
 # ---------------------------------------------------------------- type helpers
 # A missing value (\N or an empty cell) becomes None, and None properties
 # are dropped before they reach Neo4j, so the property is simply omitted.
+# Values are stripped of leading/trailing spaces (one nationality in
+# drivers.csv is "Argentinian " with a trailing space).
 
 def _missing(v):
     return v is None or v.strip() in ("", "\\N")
 
 
 def as_int(v):
-    return None if _missing(v) else int(v)
+    return None if _missing(v) else int(v.strip())
 
 
 def as_float(v):
-    return None if _missing(v) else float(v)
+    return None if _missing(v) else float(v.strip())
 
 
 def as_str(v):
-    return None if _missing(v) else v
+    return None if _missing(v) else v.strip()
 
 
 def as_date(v):
-    return None if _missing(v) else date.fromisoformat(v)
+    return None if _missing(v) else date.fromisoformat(v.strip())
 
 
 def props(**kwargs):

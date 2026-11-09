@@ -11,18 +11,25 @@ run changes nothing.
 
 ---
 
-## 1. Open items: we need to agree on these
+## 1. Value cleaning: what we changed and what we kept
 
-| # | Finding | Current behaviour | Recommendation |
-|---|---|---|---|
-| A | **Trailing space in a nationality.** Franco Colapinto (driverId 861) is stored as `"Argentinian "`. | Strings are stored exactly as in the CSV, so the space is kept. A query for `nationality = 'Argentinian'` misses him. | Strip spaces from the start and end of every string. Nothing else in the data has extra spaces, so this changes only this one value. |
-| B | **Same country, two spellings.** 11 US circuits have `circuit_country = "USA"`, and Las Vegas Strip (circuitId 80) has `"United States"`. | Kept as in the CSV. | Keep. The brief says nothing about cleaning values, and the grader's private queries are presumably written against the raw data. Mention it if asked. |
-| C | **HTML entity in a name.** Constructor 201 is `"Lotus-Pratt &amp; Whitney"`. | Kept as in the CSV. | Keep, for the same reason as B. |
+**Rule: we only remove spaces from the start and end of values. We never rewrite a
+value.** The brief says nothing about cleaning, and the grader's private queries are
+presumably written against the raw data. So spelling differences stay as they are, and
+are listed here so nobody is surprised by them.
+
+| # | Finding | Decision |
+|---|---|---|
+| A | **Trailing space in a nationality.** Franco Colapinto (driverId 861) is `"Argentinian "` in drivers.csv. | **Stripped.** Every string value is trimmed at load time, so he's stored as `"Argentinian"`. It was the only value in the 9 files with extra spaces; the graph now has none. |
+| B | **Two spellings of one nationality.** Colapinto is `"Argentinian"`, while the 24 earlier Argentine drivers are `"Argentine"`. | Kept as in the CSV. A query for Argentine drivers needs `IN ['Argentine', 'Argentinian']`. It's the only such pair; East German and Rhodesian are real historical values. |
+| C | **Two spellings of one country.** 11 US circuits have `circuit_country = "USA"`, and Las Vegas Strip (circuitId 80) has `"United States"`. | Kept as in the CSV. |
+| D | **HTML entity in a name.** Constructor 201 is `"Lotus-Pratt &amp; Whitney"`. | Kept as in the CSV. |
 
 ---
 
 ## 2. Choices about missing values
 
+- **Trimming.** Every value is trimmed before it's converted (see 1A).
 - **What counts as missing.** The brief names the literal `\N` and the empty `q2`/`q3`
   cells. We treat **any** `\N`, empty or whitespace-only cell as missing. In practice only
   `q2` (22 cells) and `q3` (46 cells) are empty; every other gap is `\N`.
