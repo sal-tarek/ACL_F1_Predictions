@@ -33,6 +33,12 @@ are listed here so nobody is surprised by them.
 
 ## 2. Choices about missing values
 
+**Confirmed by the instructor on the course channel (@34, @36):** a missing value means
+the property is left off the node, not stored as `""` or `null`. That covers `\N`, empty
+cells, and pandas `NaN`. Batching is fine as long as there are no duplicates. The script
+reads the CSVs with Python's `csv` module, not pandas, so a `NaN` can never appear, and
+the CSVs contain no literal `NaN`, `null` or `None` text.
+
 - **Trimming.** Every value is trimmed before it's converted (see 1A).
 - **What counts as missing.** The brief names the literal `\N` and the empty `q2`/`q3`
   cells. We treat **any** `\N`, empty or whitespace-only cell as missing. In practice only
@@ -136,7 +142,7 @@ so questions about qualifying or pit stops before then return nothing.
 | File named `Create_kg.py`, capital C | The brief's exact deliverable name. A Linux autograder treats `create_kg.py` as a different file. |
 | CSVs and `config.txt` read from the script's own folder | The brief says "same directory". The script works no matter which folder it's launched from. |
 | Config parsed by key: case-insensitive, split on the first `=`, spaces stripped, blank lines and `#` lines skipped | The brief requires reading by key. Splitting on the first `=` keeps a password that contains `=`. |
-| `DATABASE=` used if present, otherwise the server default | The brief forbids hardcoding a name. The grading config has the line; ours doesn't. |
+| `DATABASE=` used if present, otherwise the server default | The brief forbids hardcoding a name. The grading config has the line; ours doesn't. The instructor confirmed (@34) that any password and a local or remote instance are fine, as long as the script connects only through `config.txt`. |
 | Files read as `utf-8-sig` | Handles files re-saved with a byte-order mark (e.g. by Excel). Accented names like Pérez and Räikkönen load correctly. |
 | A uniqueness constraint on each node key | Not required by the brief. It blocks duplicates at the database level, and its index makes `MERGE` fast. |
 | `MERGE` on the key only, then `SET n += props` | Re-runs update the node instead of duplicating it. |
