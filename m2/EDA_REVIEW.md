@@ -153,7 +153,10 @@ keeping the source data faithfully or by a rule in the queries.
 2. **Order races by `r.date`** (or `r.year, r.round`), never by `raceId`. Compare dates with `date('2020-01-01')`.
 3. **Finishing order = `positionOrder`.** Wins = `position = 1`. `position` is missing for 10,953 rows, including 26 with a classified status.
 4. **Count distinct races** when the question is per driver per race (starts, entries per driver). Result nodes ≠ races in 85 cases.
-5. **Average and sum over all Result nodes** unless the question says otherwise (Q4 says to use all remaining Results).
+5. **For shared drives, one race = one finish: keep the best one.** The instructor's
+   answer on the course channel (@39): "each race should be counted once, so include the
+   best position instance only". Take `min(positionOrder)` per driver per race before
+   averaging.
 6. **Use the brief's status definitions exactly**: classified = `Finished` or `+…`; non-start = DNQ, DNPQ, Withdrew. `Not classified` is neither.
 7. **Never compare time strings** (`q1`–`q3`, `fastestLapTime`, `Result.time`, `duration`). Use `milliseconds`, or convert `m:ss.sss` to seconds in Cypher.
 8. **`grid = 0` is not a slot.** Leave it out of grid-based averages.
@@ -177,5 +180,5 @@ keeping the source data faithfully or by a rule in the queries.
 | **Q1** 2021 points and wins | R10 (half points at Spa), R2 (no shared cars in 2021) | `sum(points)`, wins = `position = 1`, group by driver node. Expect Verstappen 388.5. |
 | **Q2** Reliability 2014–21 | S1, S2, K1 (renamed teams are separate IDs) | Entries = Result nodes per constructor ID; classified uses the brief's rule; `HAVING` ≥ 100 per ID; reliability as a 0–1 float. |
 | **Q3** Hamilton vs Bottas | R1, R2, rule 15 | Pair Results in the same race with the **same constructor node**; compare `positionOrder` with strict `<`. |
-| **Q4** Monaco before 2020 | R1 (7 shared-drive pairs at Monaco), R5, rule 2 | Circuit by `circuitId: 6`; `r.date < date('2020-01-01')`; drop the 3 non-start statuses; Starts = `count(DISTINCT race)`; average finish and wins over all remaining Results; ≥ 5 starts. |
+| **Q4** Monaco before 2020 | R1 (6 shared-drive pairs at Monaco once non-starts are removed), R5, rules 2 and 5 | Circuit by `circuitId: 6`; `r.date < date('2020-01-01')`; drop the 3 non-start statuses; take the **best** Result per driver per race (instructor, @39); Starts, average finish and wins all come from that one row per race; ≥ 5 starts. Only Harry Schell changes: Monaco 1957 (12th and 8th) now counts as 8th, so his average is 11.00 instead of 11.14. |
 | **Q5** Primary constructor 2020 vs 2021 | R1, K1 (Renault 4 → Alpine 214) | Entries per (driver, season, constructor ID) = Result nodes; tie → lower `constructorId`; compare IDs; only drivers with entries in both seasons; one row. |

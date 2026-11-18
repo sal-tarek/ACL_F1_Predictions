@@ -81,7 +81,10 @@ def p3(res):
 
 
 def p4(res):
+    # Shared drives: one row per driver per race, keeping the best finish
+    # (instructor's answer on the course channel, @39).
     x = res[(res.circuitId == 6) & (pd.to_datetime(res.date) < "2020-01-01") & ~res.status.isin(NON_START)]
+    x = x.sort_values("positionOrder").drop_duplicates(["driverId", "raceId"])
     g = x.groupby(["driverId", "Driver"]).agg(Starts=("raceId", "nunique"), Avg_Finish=("positionOrder", "mean"),
                                               Wins=("position", lambda s: int((s == 1).sum()))).reset_index()
     g = g[g.Starts >= 5]

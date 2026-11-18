@@ -34,10 +34,13 @@ MATCH (:Circuit {circuitId: 6})<-[:AT_CIRCUIT]-(r:Race)<-[:FOR_RACE]-(res:Result
       (res)-[:HAS_STATUS]->(s:Status)
 WHERE r.date < date('2020-01-01')
   AND NOT s.status IN ['Did not qualify', 'Did not prequalify', 'Withdrew']
+WITH d, r,
+     min(res.positionOrder) AS bestFinish,
+     max(CASE WHEN res.position = 1 THEN 1 ELSE 0 END) AS won
 WITH d,
-     count(DISTINCT r) AS Starts,
-     toFloat(sum(res.positionOrder)) / count(res) AS Avg_Finish,
-     sum(CASE WHEN res.position = 1 THEN 1 ELSE 0 END) AS Wins
+     count(r) AS Starts,
+     toFloat(sum(bestFinish)) / count(r) AS Avg_Finish,
+     sum(won) AS Wins
 WHERE Starts >= 5
 RETURN d.forename + ' ' + d.surname AS Driver, Starts, Avg_Finish, Wins
 ORDER BY Avg_Finish ASC, Wins DESC, Driver ASC

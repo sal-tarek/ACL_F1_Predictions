@@ -101,7 +101,8 @@ The brief fixes the types, and we follow it exactly. These are the details it le
 - **Shared drives are kept as separate Results.** 85 `(race, driver)` pairs have two
   Result rows, because in the 1950s two drivers could share one car (79 of the pairs are
   from that decade, 7 are at Monaco). Each row is its own Result node. This is what the
-  brief's Q4 warning is about: count starts as distinct races.
+  brief's Q4 warning is about. The instructor confirmed (@39) that a query counts each
+  race once and uses the driver's best finish in it.
 - **Some race positions are shared too.** 123 `(race, positionOrder)` repeats and 82
   `(race, position)` repeats come from the same shared drives.
 - **Driver numbers and codes repeat across eras.** 22 drivers share a race number with
@@ -158,7 +159,9 @@ so questions about qualifying or pit stops before then return nothing.
   says.
 - **Q2:** a classified finish is `status = "Finished"` or a status starting with `"+"`.
   `"Not classified"` doesn't count.
-- **Q4:** shared drives exist at Monaco (7 pairs), so count starts as distinct races.
+- **Q4:** shared drives exist at Monaco, so each race counts once, using the driver's
+  best finish in it (instructor, @39). The graph still keeps both Results; the query
+  picks the best one.
 - **Q5:** compare constructors by ID, since Renault (4) and Alpine (214) have different
   IDs.
 - **Group by ID, display by name.** Names happen to be unique today, but grouping by ID
